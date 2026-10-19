@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Content Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/frontend/style.css">
+</head>
+<body>
+<div class="app" id="app">
+  <aside class="side" id="side">
+    <button class="new" id="newChat" type="button">+ Cuộc trò chuyện mới</button>
+    <nav class="hist" id="hist" aria-label="Lịch sử"></nav>
+    <div class="user"><span id="who"></span><button type="button" id="logout">Đăng xuất</button></div>
+  </aside>
+
+  <div class="main">
+    <div class="top">
+      <button type="button" id="menu" aria-label="Mở lịch sử">☰</button>
+      <strong>Content Studio</strong>
+    </div>
+    <div class="scroll" id="scroll">
+      <div class="empty" id="empty">
+        <h1>Bạn muốn viết về chủ đề nào?</h1>
+        <p>Gửi một chủ đề, các AI agent sẽ tìm tài liệu, viết blog và soạn bài mạng xã hội.</p>
+        <div class="chips" id="chips"></div>
+      </div>
+      <div class="thread" id="thread" hidden></div>
+    </div>
+    <div class="cw">
+      <div class="composer">
+        <textarea id="input" rows="1" maxlength="300" placeholder="Nhập chủ đề, ví dụ: Xu hướng AI trong giáo dục"></textarea>
+        <div class="tools">
+          <label>Ngôn ngữ
+            <select id="lang"><option value="Vietnamese">Tiếng Việt</option><option value="English">English</option></select>
+          </label>
+          <label><input type="checkbox" id="social" checked> Bài mạng xã hội</label>
+          <button class="send" id="send" type="button" aria-label="Gửi">↑</button>
+        </div>
+      </div>
+      <div class="notice" id="notice" role="alert"></div>
+      <div class="foot">Enter để gửi, Shift + Enter để xuống dòng. Mỗi tin nhắn là một chủ đề mới.</div>
+    </div>
+  </div>
+</div>
+
+
+<div class="auth" id="auth" hidden>
+  <form id="authForm" novalidate>
+    <h1 id="authTitle"></h1>
+    <label for="user">Tên đăng nhập</label>
+    <input id="user" autocomplete="username" maxlength="30">
+    <label for="pass">Mật khẩu</label>
+    <input id="pass" type="password" maxlength="128">
+    <div id="inviteRow" hidden>
+      <label for="invite">Mã mời</label>
+      <input id="invite" autocomplete="off" maxlength="100">
+    </div>
+    <button class="go" id="authGo" type="submit"></button>
+    <p class="msg" id="authMsg" role="alert"></p>
+    <button class="swap" id="authSwap" type="button"></button>
+  </form>
+</div>
+
+<script src="/frontend/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+# Bí mật và dữ liệu - KHÔNG đưa lên Git
+.env
+*.db
+*.sql
+*.tar.gz
+
+# Môi trường và file sinh ra
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# Công cụ
+.idea/
+.vscode/

@@ -1,0 +1,37 @@
+# Dùng riêng cho Coolify (không có env_file, không mở cổng ra máy chủ).
+# Coolify tự đọc các biến ${...} bên dưới và hiện trong tab Environment Variables.
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-content_studio}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB:-content_studio}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    expose:
+      - "8000"            # Coolify (Traefik) trỏ tên miền vào cổng này
+    environment:
+      HOST: 0.0.0.0
+      COOKIE_SECURE: ${COOKIE_SECURE:-true}
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-content_studio}
+      SERPER_API_KEY: ${SERPER_API_KEY}
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY}
+      INVITE_CODE: ${INVITE_CODE:-}
+      GEMINI_MODEL: ${GEMINI_MODEL:-gemini/gemini-3.1-flash-lite}
+
+volumes:
+  pgdata:

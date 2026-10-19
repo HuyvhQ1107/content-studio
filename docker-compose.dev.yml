@@ -1,0 +1,11 @@
+# Chế độ phát triển: sửa code trên máy là container cập nhật ngay, không cần build lại.
+# Chạy:  docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+services:
+  app:
+    volumes:
+      - ./backend:/app/backend
+      - ./database:/app/database
+      - ./frontend:/app/frontend
+    command: >
+      uvicorn backend.main:app --host 0.0.0.0 --port 8000
+      --reload --reload-dir /app/backend --reload-dir /app/database
